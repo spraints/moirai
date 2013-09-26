@@ -1,6 +1,7 @@
+require "kramdown"
+require "moirai/kramdown/weavable_parser"
+require "moirai/kramdown/converter_extensions"
 require "moirai/version"
-require "kramdown/parser/weavable"
-require "kramdown/converter/html_extensions"
 
 module Moirai
   # Your code goes here...

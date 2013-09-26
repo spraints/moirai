@@ -24,7 +24,7 @@ class Kramdown::Parser::Weavable < Kramdown::Parser::Kramdown
 			lang = @src[3].to_s.strip
 			el.attr['class'] = "language-#{lang}" unless lang.empty?
 			el.attr['file'] = @src[4]
-			el.attr['section'] = @src[5].nil? ? "*" : @src[5].sub(":", "")
+			el.attr['section'] = @src[5].nil? ? "*" : @src[5].sub(/^:/, "")
 			@tree.children << el
 			true
 		else
