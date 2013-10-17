@@ -45,3 +45,47 @@ __TEXT__
     code_map.files["example.rb"].should eq "def valid?\n  true\nend\n"
   end
 end
+
+describe "parse a document with sections" do
+  document_text = <<__TEXT__
+# Initialzer
+
+``` ruby multipart_example.rb:initializer
+def initialize(*args)
+  puts args
+end
+```
+
+# Class Def
+
+``` ruby multipart_example.rb
+class Example
+«initializer»
+end
+```
+
+# Code file
+__TEXT__
+
+  output_text = <<__TEXT__
+class Example
+def initialize(*args)
+  puts args
+end
+
+end
+__TEXT__
+
+  subject(:doc) { Kramdown::Document.new(document_text, :input => 'Weavable') }
+  subject(:code_map) { Moirai::CodeMap.new(doc) }
+
+  it "should have a file" do
+    code_map.files.length.should == 1
+  end
+  it "should know about the file" do
+    code_map.files.key?("multipart_example.rb").should == true
+  end
+  it "should have the file body" do
+    code_map.files["multipart_example.rb"].should eq output_text
+  end
+end

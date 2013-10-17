@@ -43,7 +43,7 @@ __TEXT__
   subject(:html_output){ doc.to_html }
   it "should output html" do
     html_output.should eq <<__expected__
-<pre section="*"><code class="language-ruby">def valid?
+<pre><code class="language-ruby">def valid?
   false
 end
 </code></pre>
@@ -54,7 +54,7 @@ __expected__
     def valid?
       false
     end
-{: .language-ruby section="*"}
+{: .language-ruby}
 __expected__
 .chomp
   end

@@ -10,13 +10,39 @@ module Moirai
     end
     def build_files()
       @fragments.keys.each do |file_name|
-        @files[file_name] = @fragments[file_name]["*"]
+        @files[file_name] = inflate_section @fragments[file_name]["*"], @fragments[file_name]
       end
+    end
+    def inflate_section(section, file_sections)
+      if section.nil?
+	return section
+      end
+      subsections = section.match(/«(.*?)»/)
+      subsections.to_a.drop(1).each do |section_name|
+	section.sub!(/«#{section_name}»/, inflate_section(file_sections[section_name], file_sections))
+      end
+      section
+    end
+    def is_fenced_code?(elem)
+      val = elem.type == :fenced_code_file
+      val
+    end
+    def has_file?(elem)
+      ! elem.attr()["file"].nil?
+    end
+    def new_file?(elem)
+      ! @fragments.key?( elem.attr()["file"] )
     end
     def find_fragments(elem)
       elem.children.each do |e|
-	if e.type == :fenced_code_file && ( !e.attr()["file"].nil? )
-          @fragments[e.attr()["file"]] = { e.attr()["section"] =>  e.value}
+	if is_fenced_code?(e) && has_file?(e)
+	  file = e.attr()["file"]
+	  section = e.attr()["section"]
+          if new_file?(e)
+            @fragments[file] = Hash.new
+	  else
+          end
+	  @fragments[file][section] = e.value
 	end
 	find_fragments(e)
       end
