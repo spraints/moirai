@@ -2,7 +2,9 @@
 module Moirai
   class CodeMap
     attr_accessor :files
+    attr_accessor :directories
     def initialize(document)
+      @directories = []
       @files = Hash.new
       @fragments = Hash.new
       find_fragments(document.root)
@@ -23,6 +25,12 @@ module Moirai
       end
       section
     end
+    def add_directory_for(file)
+      dir = File.dirname(file)
+      if !dir.nil? && dir != "" && ! @directories.member?(dir)
+         @directories << dir
+      end
+    end
     def is_fenced_code?(elem)
       val = elem.type == :fenced_code_file
       val
@@ -39,8 +47,8 @@ module Moirai
 	  file = e.attr()["file"]
 	  section = e.attr()["section"]
           if new_file?(e)
+            add_directory_for(file)
             @fragments[file] = Hash.new
-	  else
           end
 	  @fragments[file][section] = e.value
 	end

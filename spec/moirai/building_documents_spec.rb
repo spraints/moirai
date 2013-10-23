@@ -50,7 +50,7 @@ describe "parse a document with sections" do
   document_text = <<__TEXT__
 # Initialzer
 
-``` ruby multipart_example.rb:initializer
+``` ruby src/multipart_example.rb:initializer
 def initialize(*args)
   puts args
 end
@@ -58,7 +58,7 @@ end
 
 # Class Def
 
-``` ruby multipart_example.rb
+``` ruby src/multipart_example.rb
 class Example
 «initializer»
 end
@@ -82,10 +82,13 @@ __TEXT__
   it "should have a file" do
     code_map.files.length.should == 1
   end
+  it "should understand the directory structure" do
+    code_map.directories.should eq ["src"] 
+  end
   it "should know about the file" do
-    code_map.files.key?("multipart_example.rb").should == true
+    code_map.files.key?("src/multipart_example.rb").should == true
   end
   it "should have the file body" do
-    code_map.files["multipart_example.rb"].should eq output_text
+    code_map.files["src/multipart_example.rb"].should eq output_text
   end
 end
