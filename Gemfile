@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'kramdown'
+gem 'thor'
 
 group :development do
   gem 'rspec'
