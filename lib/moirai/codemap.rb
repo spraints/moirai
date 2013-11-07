@@ -17,7 +17,7 @@ module Moirai
     end
     def inflate_section(section, file_sections)
       if section.nil?
-	return section
+	return ""
       end
       subsections = section.match(/«(.*?)»/)
       subsections.to_a.drop(1).each do |section_name|
