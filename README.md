@@ -54,12 +54,12 @@ I'm basing this off of [Kramdown](http://kramdown.rubyforge.org/) (on [GitHub](h
 
 We expect the code to be weaved to be inside of 'fenced code blocks', the code deliminated by 3 back ticks.  The language specifier is usually one word, but we use the following pattern `[language] [path/to/file]:[sectionname|*]` where the section name `*` is the root of the file structure, although if the section has no name, it is assumed the root.  Inside of the fenced code blocks, a section name is surrounded by [Guillemets](http://en.wikipedia.org/wiki/Guillemet) as in the code example below:
 
-```ruby somefile.rb:*
-«required gems»
-«download excel sheet»
-«read data to data structure»
-«add historical data to database»
-```
+	``` ruby somefile.rb:*
+	«required gems»
+	«download excel sheet»
+	«read data to data structure»
+	«add historical data to database»
+	```
 
 *Note:* Guillemets are written with `option-\` and `option-shift-\` on a mac.
 
