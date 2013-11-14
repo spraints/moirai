@@ -1,7 +1,7 @@
 require "thor"
 module Moirai
   class CLI < Thor
-    desc "lists code output", "describe the files to be created"
+    desc "list [literate source]", "describe the files to be created"
     def list(source)
       document_text = ""
       File.open(source, "rb", :encoding => 'UTF-8') do |f|
@@ -12,7 +12,7 @@ module Moirai
       puts map.files.keys
     end
 
-    desc "writes code", "generates the contained code files"
+    desc "code [literate source]", "generates the contained code files"
     def code(source)
       document_text = ""
       File.open(source, "rb", :encoding => 'UTF-8') do |f|
@@ -32,7 +32,7 @@ module Moirai
       end
     end
 
-    desc "writes html", "converts the file to a publishable html file"
+    desc "html [literate source]", "converts the file to a publishable html file"
     def html(source)
       document_text = ""
       File.open(source, "rb", :encoding => 'UTF-8') do |f|
