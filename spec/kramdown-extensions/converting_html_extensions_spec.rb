@@ -118,3 +118,21 @@ __expected__
   end
 end
 
+describe "File named fenced html output for a section referencing another section" do
+  text = <<__TEXT__
+~~~ ruby example.rb
+«main»
+main()
+~~~
+__TEXT__
+
+  subject(:doc) { Kramdown::Document.new(text, :input => 'Weavable', :auto_ids => false )}
+  subject(:html_output){ doc.to_html }
+  it "should output" do
+    html_output.should eq <<__expected__
+<pre file="example.rb" section="*"><code class="language-ruby">&laquo;main&raquo;
+main()
+</code></pre>
+__expected__
+  end
+end

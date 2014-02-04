@@ -12,3 +12,7 @@ module Kramdown
     end
   end
 end
+Kramdown::Utils::Html::ESCAPE_MAP['«'] = "&laquo;"
+Kramdown::Utils::Html::ESCAPE_MAP['»'] = "&raquo;"
+Kramdown::Utils::Html::ESCAPE_ALL_RE = Regexp.union(Kramdown::Utils::Html::ESCAPE_ALL_RE, /«|»/)
+Kramdown::Utils::Html::ESCAPE_RE_FROM_TYPE[:all] = Kramdown::Utils::Html::ESCAPE_ALL_RE;
