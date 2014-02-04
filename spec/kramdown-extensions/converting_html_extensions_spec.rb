@@ -120,7 +120,7 @@ end
 
 describe "File named fenced html output for a section referencing another section" do
   text = <<__TEXT__
-~~~ ruby example.rb
+~~~ ruby example.rb:*
 «main»
 main()
 ~~~

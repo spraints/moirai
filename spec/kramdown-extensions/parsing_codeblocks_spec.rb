@@ -49,7 +49,7 @@ end
 describe "section aware codeblock parsing" do
 	text = <<__TEXT__
 # example document
-``` ruby example.rb:valid
+``` ruby example.rb:valid-section
 def valid?
   true
 end
@@ -69,7 +69,7 @@ __TEXT__
     code_sample.attr()["file"].should eq "example.rb"
   end
   it "should define the section as valid" do
-    code_sample.attr()["section"].should eq "valid"
+    code_sample.attr()["section"].should eq "valid-section"
   end
 end
 describe "multiple section aware codeblock parsing" do

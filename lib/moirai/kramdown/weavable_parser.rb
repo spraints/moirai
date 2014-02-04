@@ -13,7 +13,7 @@ class Kramdown::Parser::Weavable < Kramdown::Parser::Kramdown
 		             (\w+)? # language (optional)
 			     \s*?
 			     ((?: \w | \/ | \\)+\.\w+)? # file name (optional. handles directories. requires an extension. no spaces)
-                             (\:\w+)? # Section Name (Optional)
+                             (\:(?:\*|[\w-]+))? # Section Name (Optional)
 			     \n
 			     (.*?) # Code
 			     ^\1\2*\s*?\n/xm
