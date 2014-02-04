@@ -1,4 +1,4 @@
-
+# encoding: utf-8
 module Moirai
   class CodeMap
     attr_accessor :files

@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'moirai'
 
 describe "normal html output" do

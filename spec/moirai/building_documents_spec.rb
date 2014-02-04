@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'moirai'
 
 describe "Parse a document with codeblocks that don't belong to documents" do

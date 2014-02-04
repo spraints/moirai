@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Kramdown
   module Converter
     class Html
