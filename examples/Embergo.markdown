@@ -15,7 +15,7 @@ To handle our applications, We will need to perform the following actions
 * GET all kittens
 * POST a new kitten
 
-``` go server.go:router_setup
+```{ go server.go:router_setup }
   r := mux.NewRouter()
   r.HandleFunc("/api/kittens/{id}", DeleteKittenHandler).Methods("DELETE")
   r.HandleFunc("/api/kittens/{id}", UpdateKittenHandler).Methods("PUT")
@@ -33,7 +33,7 @@ The list of kittens is handled in the following way:
 3. die, becaus if we can't convert kittens to json, we're in trouble.
 4. write our json kittens to the response
 
-``` go server.go:kittens_handler
+```{ go server.go:kittens_handler }
 func KittensHandler(w http.ResponseWriter, r* http.Request){
   w.Header().Set("content-type", "application/json")
   j, err := json.Marshal(KittensJSON{Kittens: kittens})
@@ -53,7 +53,7 @@ Creating a kitten contains the following steps:
 3. Then we add the kitten to the litter.
 4. We next turn the kitten back in to json, set the response type to json, and write it to the response.
 
-``` go server.go:create_kitten_handler
+```{ go server.go:create_kitten_handler }
 func CreateKittenHandler(w http.ResponseWriter, r *http.Request){
   var kittenJSON KittenJSON
   err := json.NewDecoder(r.Body).Decode(&kittenJSON)
@@ -87,7 +87,7 @@ Updating a kitten requires the following:
 4. Update the kittens name
 5. Send _no content_ back to the app
 
-``` go server.go:update_kitten_handler
+```{ go server.go:update_kitten_handler }
 func UpdateKittenHandler(w http.ResponseWriter, r *http.Request){
   vars := mux.Vars(r)
   id, err := strconv.Atoi(vars["id"])
@@ -119,7 +119,7 @@ In the unfortunate situation where a kitten is to be removed, the following happ
 3. The kitten storage is rebuilt with the kittens before and after
 4. And _no content_ is returned to the application
 
-``` go server.go:delete_kitten_handler
+```{ go server.go:delete_kitten_handler }
 func DeleteKittenHandler(w http.ResponseWriter, r *http.Request){
   vars := mux.Vars(r)
   id, err := strconv.Atoi(vars["id"])
@@ -146,7 +146,7 @@ func DeleteKittenHandler(w http.ResponseWriter, r *http.Request){
 
 A kitten is a struct with an Id, a Name, and a Picture.  Kittens are collected as an array for storage between requests.  When transfering, we have some JSON structs to encapsulte a kitten or collection of kittens that are sent between the app and server.
 
-``` go server.go:kitten_typedefs
+```{ go server.go:kitten_typedefs }
 type Kitten struct {
   Id int `json:"id"`
   Name string `json:"name"`
@@ -170,7 +170,7 @@ The following is how Ember makes use of the kittens
 
 The page starts by displaying an unamed template.  The template contains an outlet that will be filled based on the router logic we will describe later.  Notice the linkTo statements that will cause navigation to different URLs that will be used to pick the controller used.
 
-``` html public/index.html:default_template
+```{ html public/index.html:default_template }
 <script type="text/x-handlebars">
   <div class="container">
     <ul class="container">
@@ -184,7 +184,7 @@ The page starts by displaying an unamed template.  The template contains an outl
 
 The following template is the default view.  It creates an unordered list and loops over each kitten in the controller.  Each kitten is then displayed inside a "span3" styled list item and displayed as an image and an H3 containing a name.  It also has a link to edit and a button to delete the kitten.
 
-``` html public/index.html:index_template
+```{ html public/index.html:index_template }
 <script type="text/x-handlebars" data-template-name="index">
   <ul class="thumbnails">
   {{#each controller}}
@@ -205,7 +205,7 @@ The following template is the default view.  It creates an unordered list and lo
 
 the creation form makes us of a partial
 
-``` html public/index.html:create_form
+```{ html public/index.html:create_form }
 <script type="text/x-handlebars" data-template-name="create">
   <h1>Create kitten</h1>
   {{partial 'form'}}
@@ -214,7 +214,7 @@ the creation form makes us of a partial
 
 The edit form also makes use of the partial
 
-``` html public/index.html:edit_form
+```{ html public/index.html:edit_form }
 <script type="text/x-handlebars" data-template-name="edit">
   <h1>Edit kitten</h1>
   {{partial 'form'}}
@@ -223,7 +223,7 @@ The edit form also makes use of the partial
 
 The partial form specifies the input box and it's source value.  In this case, name.  It also has a submit button.
 
-``` html public/index.html:form_template
+```{ html public/index.html:form_template }
 <script type="text/x-handlebars" data-template-name="_form">
   <form {{action save on="submit"}} class="form-line">
     {{input type="text" value=name}}
@@ -234,7 +234,7 @@ The partial form specifies the input box and it's source value.  In this case, n
 
 The templates are laid out in order
 
-``` html public/index.html:templates
+```{ html public/index.html:templates }
 «default_template»
 «form_template»
 «create_template»
@@ -244,7 +244,7 @@ The templates are laid out in order
 
 We use the following scripts.  The app.js is the source code we use.  It's described below.
 
-``` html public index.html:scripts
+```{ html public index.html:scripts }
 <script src="js/lib/jquery.js"></script>
 <script src="js/lib/handlebars.js"></script>
 <script src="js/lib/ember.js"></script>
@@ -256,7 +256,7 @@ We use the following scripts.  The app.js is the source code we use.  It's descr
 
 Ember must know about kittens as well.  Kittens, if you recall, only contain a name and picture URL.
 
-``` javascript public/js/app.js:model_definition
+```{ javascript public/js/app.js:model_definition }
 App.Kitten = DS.Model.extend({
   name: DS.attr('string'),
   picture: DS.attr('string')
@@ -267,7 +267,7 @@ App.Kitten = DS.Model.extend({
 
 The first thing the user sees is the index.  The index route is defined below.
 
-``` javascript public/js/app.js:index_route
+```{ javascript public/js/app.js:index_route }
 App.IndexRoute = Ember.Route.extend({
   mode: function(){
 	  return App.Kitten.find();
@@ -280,7 +280,7 @@ App.IndexRoute = Ember.Route.extend({
 
 the deleteKitten event is triggered in the index template by the handlebars code {{action deleteKitten this}} which sends the deleteKitten event to the current, in this case Index, controller.  The kitten model in question is passed to the event handler and removed from the repository.
 
-``` javascript public/js/app.js:delete_kitten
+```{ javascript public/js/app.js:delete_kitten }
 deleteKitten: function(kitten){
 		kitten.deleteRecord();
 		kitten.save();
@@ -289,7 +289,7 @@ deleteKitten: function(kitten){
 
 The other two routes are create and edit.  They are described by the following code.  Notice the URL definition for the edit controller also defines a place where the kitten_id is embedded in the URL.
 
-``` javascript public/js/app.js:router_definition
+```{ javascript public/js/app.js:router_definition }
 App.Router.map(function(){
   this.route('create');
   this.route('edit', {path: '/edit/:kitten_id'});
@@ -299,7 +299,7 @@ App.Router.map(function(){
 
 The create controller handles the saving of a new kitten, navigation to index, and then resets the controller variables to empty.
 
-``` javascript public/js/app.js:create_controller
+```{ javascript public/js/app.js:create_controller }
 App.CreateController = Ember.Controller.extend({
   name: null,
   save: function(){
@@ -316,7 +316,7 @@ App.CreateController = Ember.Controller.extend({
 
 The edit controller extens an ObjectController and contains a save function that gets the incoming model, saves it to the store, then navigates to the index route.
 
-``` javascript public/js/app.js:create_controller
+```{ javascript public/js/app.js:create_controller }
 App.CreateController = Ember.Controller.extend({
   name:null,
   save:function(){
@@ -334,7 +334,7 @@ App.CreateController = Ember.Controller.extend({
 
 The App uses a data store defined in the DS.RESTAdapter
 
-``` javacsript public/js/app.js:store_definition
+```{ javacsript public/js/app.js:store_definition }
 App.Store = DS.Store.extend({
   revision: 13,
   adapter: DS.RESTAdapter.create({
@@ -349,7 +349,7 @@ I did not include Ember and JQuery.  Those will have to be downloaded yourself.
 
 # Appendix 1. Structure of the go server
 
-``` go server.go
+```{ go server.go }
 package main
 import (
   "encoding/json"
@@ -380,7 +380,7 @@ func main(){
 
 # Appendix 2. Structure of the html template
 
-``` html public/index.html
+```{ html public/index.html }
 <!DOCTYPE html>
 <html>
   <head>
@@ -397,7 +397,7 @@ func main(){
 ```
 # Appendix 3. Strucutre of the App.js
 
-``` javascript public/js/app.js
+```{ javascript public/js/app.js }
 (function(){
   var App = Ember.Application.create();
 «store_definition»
