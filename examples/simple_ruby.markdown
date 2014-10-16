@@ -2,7 +2,7 @@
 
 A simple hello world application
 
-``` ruby hello.rb
+```{ ruby hello.rb }
 puts "Hello, World!"
 ```
 
